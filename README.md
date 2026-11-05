@@ -26,7 +26,7 @@ It works on any website that can add a script tag: Framer, Webflow, WordPress, S
 You need [Node.js 24](https://nodejs.org) or newer and an [OpenAI API key](https://platform.openai.com/api-keys). A database is built in.
 
 ```bash
-git clone https://github.com/DeanYoung1/lex.git
+git clone https://github.com/deanayoung3-droid/lex.git
 cd lex
 npm install
 npm run setup
