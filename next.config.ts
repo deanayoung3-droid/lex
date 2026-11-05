@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Produces a self-contained server in .next/standalone for the Docker image.
-  output: "standalone",
+  // The Docker image builds a self-contained server in .next/standalone (BUILD_STANDALONE=1 in the
+  // Dockerfile); everywhere else, `npm start` runs the normal build.
+  output: process.env.BUILD_STANDALONE ? "standalone" : undefined,
   // Loaded by Node at runtime rather than bundled: PGlite ships WebAssembly and data files.
   serverExternalPackages: ["@electric-sql/pglite", "@electric-sql/pglite-pgvector"],
   // The Next.js badge would sit inside the chat's frame in development.
