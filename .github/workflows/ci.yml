@@ -1,0 +1,61 @@
+# Every push and pull request: lint, type-check, build the Docker image, and start it against a
+# real Postgres (with pgvector) to prove it boots, migrates, and serves its pages.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Lint, types, and a boot test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env:
+          POSTGRES_USER: lex
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: lex
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U lex -d lex"
+          --health-interval 5s
+          --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Build the image
+        run: docker build -t lex:ci .
+      - name: Start it and check the pages
+        run: |
+          docker run -d --name app --network host \
+            -e PORT=8080 -e HOSTNAME=127.0.0.1 \
+            -e DATABASE_URL=postgresql://lex:ci@127.0.0.1:5432/lex \
+            -e ADMIN_PASSWORD=ci-admin-password \
+            -e SESSION_SECRET=ci-session-secret-only-for-this-test \
+            -e PUBLIC_URL=http://127.0.0.1:8080 \
+            lex:ci
+          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8080/api/health >/dev/null 2>&1 && break; sleep 2; done
+          fail=0
+          expect() { # path status
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8080$1")
+            if [ "$code" != "$2" ]; then echo "::error::$1 answered $code, expected $2"; fail=1; else echo "ok  $1 → $code"; fi
+          }
+          expect /api/health 200
+          expect /login 200
+          expect /admin 307
+          expect /lex.js 200
+          expect /chat 200
+          if [ "$fail" != 0 ]; then docker logs app 2>&1 | tail -80; fi
+          exit $fail

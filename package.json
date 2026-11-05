@@ -1,0 +1,42 @@
+{
+  "name": "lex",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An AI assistant for your website: answers visitors from your own pages, shows them the right page, and books calls.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "setup": "node scripts/setup.mjs"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.14",
+    "@electric-sql/pglite-pgvector": "0.0.15",
+    "next": "16.4.3",
+    "openai": "^7.47.0",
+    "pg": "8.23.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "thinking-orbs": "0.3.2",
+    "turndown": "^7.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^24.19.2",
+    "@types/pg": "8.23.1",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/turndown": "^5.0.6",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

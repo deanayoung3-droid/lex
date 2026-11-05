@@ -1,0 +1,57 @@
+# Lex with its own Postgres (with pgvector).
+#
+#   npm run setup -- --docker      # or: cp .env.example .env and fill in the required values
+#   docker compose up -d --build   # then open http://localhost:3000
+#
+# On a server with a domain pointed at it, add automatic HTTPS (Caddy gets the certificate):
+#   set DOMAIN=lex.example.com and PUBLIC_URL=https://lex.example.com in .env, then
+#   docker compose --profile https up -d --build
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lex
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lex}
+      POSTGRES_DB: lex
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lex -d lex"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    image: lex:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://lex:${POSTGRES_PASSWORD:-lex}@db:5432/lex
+    ports:
+      - "${PORT:-3000}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Only with --profile https: HTTPS for DOMAIN, with certificates from Let's Encrypt.
+  caddy:
+    image: caddy:2
+    profiles: ["https"]
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - app
+
+volumes:
+  db-data:
+  caddy-data:
+  caddy-config:

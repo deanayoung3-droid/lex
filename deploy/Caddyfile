@@ -1,0 +1,6 @@
+# HTTPS in front of Lex (docker compose --profile https). DOMAIN comes from .env, like
+# DOMAIN=lex.example.com.
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:8080
+}

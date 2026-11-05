@@ -1,0 +1,660 @@
+@import "tailwindcss";
+
+/* The admin's look: a white canvas, a rail one step darker, hairline borders, flat cards, gray body
+   copy, and buttons with a soft top-to-bottom face. Cool grays, navy-black ink, and one purple
+   accent for actions and selection. (The chat on your website has its own look, in chat/panel.tsx.) */
+:root {
+  /* Surfaces, lightest to darkest */
+  --surface: #ffffff;
+  --sunken: #f9f9fb;
+  --ground: #f4f5f7;
+  --well: #eff0f3;
+  --hover: var(--well);
+  /* Ink, darkest to lightest */
+  --ink-strong: #0a0d12;
+  --ink: #181d27;
+  --graphite: #414651;
+  --muted: #646873;
+  --faint: #8d919a;
+  --placeholder: #a4a7ae;
+  /* Lines */
+  --line-soft: #eff0f2;
+  --line: #e6e7ea;
+  --line-strong: #d5d7da;
+  /* Accent */
+  --accent: #7f56d9;
+  --accent-ink: #ffffff;
+  --accent-soft: color-mix(in oklab, var(--accent) 10%, white);
+  --accent-line: color-mix(in oklab, var(--accent) 30%, white);
+  --accent-strong: color-mix(in oklab, var(--accent) 80%, black);
+  /* States: ok and new are green, waiting-on-you is orange, danger is red */
+  --success: #067647;
+  --success-soft: #ecfdf3;
+  --success-line: #abefc6;
+  --ok-dot: #17b26a;
+  --you: #ef6820;
+  --you-soft: #fef6ee;
+  --you-strong: #b93815;
+  --warn-soft: #fffaeb;
+  --warn-line: #fedf89;
+  --warn-strong: #b54708;
+  --danger: #d92d20;
+  --danger-soft: #fef3f2;
+  --danger-line: #fecdca;
+  --danger-strong: #b42318;
+  --add-bg: #ecfdf3;
+  --add-ink: #067647;
+  --del-bg: #fef3f2;
+  --del-ink: #b42318;
+  --hit: #fef7c3;
+  --code-bg: #0a0d12;
+  /* Depth: cards are flat; menus and dialogs float */
+  --shadow-xs: 0 1px 0 var(--line);
+  --shadow-sm: 0 1px 0 var(--line);
+  --shadow-inset: inset 0 1px 2px rgb(10 13 18 / 0.05);
+  --shadow-md: 0 1px 0 var(--line), 0 12px 30px rgb(10 13 18 / 0.12);
+  --shadow-lg: 0 1px 0 var(--line), 0 12px 30px rgb(10 13 18 / 0.12);
+  --shadow-pop: 0 0 0 1px rgb(10 13 18 / 0.08), 0 24px 60px rgb(10 13 18 / 0.16);
+  /* Button faces */
+  --btn-primary-bg: linear-gradient(180deg, color-mix(in oklab, var(--accent) 88%, white) 0%, var(--accent) 100%);
+  --btn-primary-border: color-mix(in oklab, var(--accent) 78%, black);
+  --btn-primary-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22), 0 1px 0 color-mix(in oklab, var(--accent) 62%, black), 0 2px 4px rgb(10 13 18 / 0.08);
+  --btn-secondary-bg: linear-gradient(180deg, #ffffff 0%, #f1f2f4 100%);
+  --btn-secondary-border: #d5d7da;
+  --btn-secondary-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 1px 0 #c5c8ce, 0 2px 4px rgb(10 13 18 / 0.08);
+  --btn-ink-bg: linear-gradient(180deg, #252b37 0%, #181d27 100%);
+  --btn-ink-border: #0a0d12;
+  --btn-ink-shadow: inset 0 1px 0 rgb(255 255 255 / 0.1), 0 1px 0 #05070a, 0 2px 4px rgb(10 13 18 / 0.08);
+  --focus-ring: 0 0 0 2px var(--surface), 0 0 0 4px color-mix(in oklab, var(--accent) 70%, white);
+  --dur: 120ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --font-display-stack: -apple-system, BlinkMacSystemFont, "SF Pro Display", var(--font-inter), "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+@theme inline {
+  --text-2xs: 11px;
+  --text-2xs--line-height: 1.2;
+  --text-xs: 12px;
+  --text-xs--line-height: 1.3;
+  --text-sm: 13px;
+  --text-sm--line-height: 1.4;
+  --text-base: 14px;
+  --text-base--line-height: 1.4;
+  --text-lg: 16px;
+  --text-lg--line-height: 1.45;
+  --text-xl: 19px;
+  --text-xl--line-height: 1.4;
+  --radius: 6px;
+  --radius-xs: 4px;
+  --radius-sm: 5px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+}
+
+@theme inline {
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-sunken: var(--sunken);
+  --color-well: var(--well);
+  --color-hover: var(--hover);
+  --color-ink: var(--ink);
+  --color-ink-strong: var(--ink-strong);
+  --color-graphite: var(--graphite);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line-soft: var(--line-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: var(--accent-line);
+  --color-accent-strong: var(--accent-strong);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-strong: var(--danger-strong);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warn-soft: var(--warn-soft);
+  --color-warn-line: var(--warn-line);
+  --color-warn-strong: var(--warn-strong);
+  --color-ok: var(--ok-dot);
+  --color-you: var(--you);
+  --color-you-soft: var(--you-soft);
+  --color-you-strong: var(--you-strong);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-display-stack);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-inter), -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-line);
+}
+
+/* In the base layer so components (like .field and .btn) can replace it with their own ring. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--accent) 70%, white);
+    outline-offset: 2px;
+  }
+}
+
+/* Motion. Enter animations use fill-mode `backwards` so no transform lingers afterwards. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+}
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@layer components {
+  .page-enter {
+    animation: rise 320ms var(--ease-out) backwards;
+  }
+  .rise {
+    animation: rise 380ms var(--ease-out) backwards;
+    animation-delay: calc(var(--i, 0) * 35ms);
+  }
+  .fade-in {
+    animation: fade 240ms ease-out backwards;
+  }
+  .pop-in {
+    animation: pop 160ms var(--ease) backwards;
+  }
+
+  /* Page titles: one size across the admin. */
+  .title {
+    font-family: var(--font-display-stack);
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  /* Card and section headings inside a page. */
+  .heading {
+    font-family: var(--font-display-stack);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+  /* Display headings. */
+  .display {
+    font-family: var(--font-inter), -apple-system, sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  /* Small uppercase group labels: "Create an article", "Yesterday", "Workspace". */
+  .kicker {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .card-hover {
+    transition:
+      border-color var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      transform var(--dur) var(--ease);
+  }
+  .card-hover:hover {
+    border-color: var(--line-strong);
+    background: var(--sunken);
+  }
+  .card-hover:active {
+    transform: scale(0.99);
+  }
+  /* The bar at the bottom of a settings card that holds its save button. */
+  .card-footer {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    border-top: 1px solid var(--line);
+    background: var(--sunken);
+    padding: 10px 20px;
+  }
+
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 6px;
+    border: 1px solid var(--btn-secondary-border);
+    background-color: #ffffff;
+    background-image: var(--btn-secondary-bg);
+    box-shadow: var(--btn-secondary-shadow);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      transform var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease),
+      background-color var(--dur) var(--ease),
+      filter var(--dur) var(--ease);
+  }
+  .btn:not(:disabled):hover {
+    filter: brightness(0.985);
+  }
+  .btn:not(:disabled):active {
+    transform: translateY(1px);
+    box-shadow: inset 0 1px rgb(255 255 255 / 0.15);
+  }
+  .btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+    background-image: none;
+    background-color: var(--well);
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--muted);
+  }
+  .btn-sm {
+    height: 30px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .btn-icon {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+  }
+  .btn-primary {
+    background-image: var(--btn-primary-bg);
+    border-color: var(--btn-primary-border);
+    box-shadow: var(--btn-primary-shadow);
+    color: var(--accent-ink);
+  }
+  .btn-dark {
+    background-image: var(--btn-ink-bg);
+    border-color: var(--btn-ink-border);
+    box-shadow: var(--btn-ink-shadow);
+    color: #ffffff;
+  }
+  /* Destructive actions keep the ordinary face; only the label turns red. */
+  .btn-danger {
+    color: var(--danger-strong);
+  }
+  .btn-danger:not(:disabled):hover {
+    background-image: none;
+    background-color: var(--danger-soft);
+    filter: none;
+  }
+  .btn-quiet {
+    background-image: none;
+    background-color: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: var(--graphite);
+  }
+  .btn-quiet:not(:disabled):hover {
+    background-color: var(--well);
+    filter: none;
+  }
+  .btn-quiet:not(:disabled):active {
+    box-shadow: none;
+    transform: none;
+  }
+  .btn-quiet:disabled {
+    background-color: transparent;
+    opacity: 0.5;
+  }
+
+  .field {
+    width: 100%;
+    height: 40px;
+    padding: 0 12px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 14px;
+    box-shadow: var(--shadow-inset);
+    transition:
+      border-color var(--dur) var(--ease),
+      box-shadow var(--dur) var(--ease);
+  }
+  textarea.field {
+    height: auto;
+    padding: 9px 12px;
+    line-height: 1.5;
+  }
+  .field::placeholder {
+    color: var(--faint);
+  }
+  .field:focus-visible,
+  .field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--graphite);
+  }
+  .hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* A checkbox drawn as an on/off switch. */
+  .toggle {
+    appearance: none;
+    position: relative;
+    flex-shrink: 0;
+    width: 30px;
+    height: 18px;
+    border-radius: 999px;
+    background: var(--line-strong, var(--line));
+    cursor: pointer;
+    transition: background-color var(--dur) var(--ease);
+  }
+  .toggle::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
+    transition: transform var(--dur) var(--ease);
+  }
+  .toggle:checked {
+    background: var(--accent);
+  }
+  .toggle:checked::after {
+    transform: translateX(12px);
+  }
+  .toggle:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+  .toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .link {
+    color: var(--accent-strong);
+    font-weight: 500;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .notice {
+    border: 1px solid var(--line);
+    background: var(--sunken);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--graphite);
+    animation: slide-down 240ms var(--ease-out) backwards;
+  }
+  .notice-error {
+    border-color: var(--danger-line);
+    background: var(--danger-soft);
+    color: var(--danger-strong);
+  }
+  .notice-accent {
+    border-color: var(--accent-line);
+    background: var(--accent-soft);
+    color: var(--ink);
+  }
+
+  /* Status badges: a pale ground with dark ink of the same hue. */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.25;
+    background: var(--well);
+    color: var(--graphite);
+    white-space: nowrap;
+  }
+  .chip-accent {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+  }
+  .chip-ok {
+    background: var(--success-soft);
+    color: var(--success);
+  }
+  .chip-you {
+    background: var(--you-soft);
+    color: var(--you-strong);
+  }
+  .chip-danger {
+    background: var(--danger-soft);
+    color: var(--danger-strong);
+  }
+  /* Small counts beside a nav item. */
+  .count {
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.2;
+    font-variant-numeric: tabular-nums;
+    background: var(--you-soft);
+    color: var(--you-strong);
+  }
+
+  .skeleton {
+    border-radius: 6px;
+    background: linear-gradient(90deg, var(--sunken) 0%, var(--well) 50%, var(--sunken) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+  .working-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+    animation: pulse-dot 1.2s ease-in-out infinite;
+  }
+  .ping {
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  .spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    animation: spin 700ms linear infinite;
+  }
+
+  .tab {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    transition: color var(--dur) var(--ease);
+  }
+  .tab:hover {
+    color: var(--ink);
+  }
+  .tab::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: -1px;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transition: transform 200ms var(--ease-out);
+  }
+  .tab[aria-selected="true"],
+  .tab[aria-current="page"] {
+    color: var(--ink);
+  }
+  .tab[aria-selected="true"]::after,
+  .tab[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* A pill-shaped segmented control: Monthly / Annual, Changes / Preview / Edit. */
+  .segmented {
+    display: inline-flex;
+    gap: 2px;
+    border-radius: 6px;
+    background: var(--well);
+    padding: 2px;
+  }
+  .segmented > * {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease);
+  }
+  .segmented > *:hover {
+    color: var(--ink);
+  }
+  .segmented > [aria-pressed="true"],
+  .segmented > [aria-selected="true"],
+  .segmented > [aria-current="page"] {
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 1px 0 var(--line);
+  }
+
+  /* The dotted canvas behind previews. */
+  .dots {
+    background-color: var(--surface);
+    background-image: radial-gradient(var(--line-strong) 0.75px, transparent 1px);
+    background-size: 16px 16px;
+  }
+
+  .slim-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  mark,
+  .hit {
+    background: var(--hit);
+    color: inherit;
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+}
