@@ -5,9 +5,33 @@
   </picture>
 </p>
 
-# Lex
+<h1 align="center">Lex</h1>
 
-**An AI assistant for your website that gets visitors to the next step.** Lex sits in the corner of every page as a small text box. Visitors ask what they'd ask a salesperson; Lex answers from your own website (and your docs, and notes you write), takes them to the page or section that shows it, and nudges interested ones toward a call, a demo, or signing up. When someone leaves their email, you hear about it in Slack.
+<p align="center">
+  <b>An AI assistant for your website that gets visitors to the next step.</b><br>
+  It answers from your own pages, shows visitors the part that proves it, and hands you the ones who want to talk.
+</p>
+
+<p align="center">
+  <a href="https://github.com/deanayoung3-droid/lex/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/deanayoung3-droid/lex/ci.yml?branch=main&label=build&style=flat-square" alt="Build status"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/deanayoung3-droid/lex?style=flat-square&color=0a0d12" alt="MIT license"></a>
+  <a href="https://github.com/deanayoung3-droid/lex/stargazers"><img src="https://img.shields.io/github/stars/deanayoung3-droid/lex?style=flat-square&color=0a0d12" alt="GitHub stars"></a>
+  <a href="https://github.com/deanayoung3-droid/lex/commits/main"><img src="https://img.shields.io/github/last-commit/deanayoung3-droid/lex?style=flat-square&color=0a0d12" alt="Last commit"></a>
+  <img src="https://img.shields.io/badge/node-24%2B-0a0d12?style=flat-square" alt="Node.js 24 or newer">
+  <img src="https://img.shields.io/badge/self--hosted-Docker-0a0d12?style=flat-square" alt="Self-hosted with Docker">
+</p>
+
+<p align="center">
+  <a href="https://deanayoung3-droid.github.io/lex/"><b>Website and live demo</b></a> ·
+  <a href="#quick-start-on-your-computer-about-5-minutes">Quick start</a> ·
+  <a href="docs/self-hosting.md">Self-hosting</a>
+</p>
+
+<p align="center">
+  <img src="docs/images/on-your-site.png" width="880" alt="Lex open on a sample company's website, answering how automatic reminders work and whether clients can pay by card, with a Book a call button">
+</p>
+
+Lex sits in the corner of every page as a small text box. Visitors ask what they'd ask a salesperson; Lex answers from your own website (and your docs, and notes you write), takes them to the page or section that shows it, and nudges interested ones toward a call, a demo, or signing up. When someone leaves their email, you hear about it in Slack.
 
 You run it yourself: one small server, your own OpenAI key, your data.
 
@@ -20,6 +44,17 @@ You run it yourself: one small server, your own OpenAI key, your data.
 - **Tells you what people want.** **Trends** groups every question into topics, shows what Lex couldn't answer (so you can add it to its notes), how far chats get toward a call, and which pages people ask on. **Chats** has every conversation in full.
 
 It works on any website that can add a script tag: Framer, Webflow, WordPress, Squarespace, Shopify, or your own.
+
+## Screenshots
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/images/trends.png" alt="Trends: chats, questions, leads and booked calls, chats each day, and common questions by topic"><br><sub><b>Trends</b>: what people ask most, what Lex couldn't answer, and how far chats get.</sub></td>
+    <td width="50%"><img src="docs/images/chat.png" alt="A full chat that ended with a visitor leaving their details"><br><sub><b>Chats</b>: every conversation in full, with the lead's details.</sub></td>
+  </tr>
+</table>
+
+<sub>Shown with sample data for a made-up company, Acme Invoicing.</sub>
 
 ## Quick start (on your computer, about 5 minutes)
 
@@ -75,6 +110,15 @@ Lex("open");
 Lex("close");
 Lex("ask", "Do you integrate with Slack?");
 ```
+
+## Star history
+
+<a href="https://star-history.com/#deanayoung3-droid/lex&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=deanayoung3-droid/lex&type=Date&theme=dark">
+    <img alt="Star history chart for Lex" src="https://api.star-history.com/svg?repos=deanayoung3-droid/lex&type=Date">
+  </picture>
+</a>
 
 ## License
 

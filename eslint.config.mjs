@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The project website (GitHub Pages), plain HTML with a vendored library.
+    "site/**",
   ]),
 ]);
 
