@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/lex-orb-white.svg">
+    <img src="docs/images/lex-orb.svg" width="112" alt="Lex's thinking orb">
+  </picture>
+</p>
+
 # Lex
 
 **An AI assistant for your website that gets visitors to the next step.** Lex sits in the corner of every page as a small text box. Visitors ask what they'd ask a salesperson; Lex answers from your own website (and your docs, and notes you write), takes them to the page or section that shows it, and nudges interested ones toward a call, a demo, or signing up. When someone leaves their email, you hear about it in Slack.
@@ -19,7 +26,7 @@ It works on any website that can add a script tag: Framer, Webflow, WordPress, S
 You need [Node.js 24](https://nodejs.org) or newer and an [OpenAI API key](https://platform.openai.com/api-keys). A database is built in.
 
 ```bash
-git clone https://github.com/YOUR-ACCOUNT/lex.git
+git clone https://github.com/DeanYoung1/lex.git
 cd lex
 npm install
 npm run setup
@@ -71,4 +78,4 @@ Lex("ask", "Do you integrate with Slack?");
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE). Lex's orb is drawn by [thinking-orbs](https://www.npmjs.com/package/thinking-orbs) (MIT, Jakub Antalik).

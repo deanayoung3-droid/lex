@@ -7,7 +7,7 @@ Lex is one small Node.js server. Your website loads the chat from it, so it need
 **You need:** a server with Docker (the smallest VPS is enough: 1 CPU, 1 GB of memory; install Docker with `curl -fsSL https://get.docker.com | sh`), a domain name like `lex.example.com` with an `A` record pointing at the server, ports 80 and 443 open, and an OpenAI API key.
 
 ```bash
-git clone https://github.com/YOUR-ACCOUNT/lex.git
+git clone https://github.com/DeanYoung1/lex.git
 cd lex
 ```
 
